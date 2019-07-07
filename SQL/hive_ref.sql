@@ -44,10 +44,6 @@ set hive.auto.convert.join=true;
 create table … partitioned by … STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 
 
---To avoid s3 consistency issues with creating / dropping temp tables:
--- use temp_adhoc_yarn or temp_abtest db, not temp.  https://wiki.coupang.net/display/DE/Create+temporary+tables+in+Hive
-
-
 
 --to avoid illegal capacity error (if using Tez.  Or, switch to MR) (not sure how to decide the right quantities):
 set hive.merge.tezfiles=true;
