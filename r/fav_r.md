@@ -8,7 +8,7 @@
 Packages:
 ```r
 install.packages("devtools")
-install.packages('dplyr')
+install.packages("dplyr")
 install.packages("tidyr")
 install.packages("GGally")    # ggplot2 extension. especially for modeling
 install.packages("ProjectTemplate")
@@ -107,6 +107,9 @@ daply(                          # da (dataframe in, array out) ply
  .variables = c("continent", "year"),
  .fun = function(x) mean(x$gdp)
 )
+
+# Alternative:
+with(mydf, table(sex,grp))
 ```
 
 Convert wide to long with gather:
@@ -135,6 +138,18 @@ gap_long <- gap_long %>% separate(obstype_year,into=c('obs_type','year'),sep="_"
 gap_long$year <- as.integer(gap_long$year)
 ```
 
+Convert numbers to factors:
+
+```r
+grp_fac <- factor(grp, levels = c(1,2,3),  labels = c('Red','Blue','Green')) 
+```
+
+Create dataframe from vectors:
+```r
+sal <- c(1000, 1200, 1345, 1234)
+fcst <- c(1200, 1300, 1300, 1200)
+df <- data.frame(sales = sal, forecast = fcst)
+```
 
 # User Defined Functions (UDF)
 Convert f to kelvin:
@@ -162,6 +177,25 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
   return(new)
 }
 ```
+
+Access like a matrix:
+```r
+gapminder[1,2]  # first row, 2nd col
+gapminder[1,]   # first fow, all col
+gapminder[,2]   # all rows, 2nd col
+gapmider[1,1:2] # first row, cols 1-2
+```
+
+# Loops
+
+For loop:
+```r
+for (y in x) {
+  print(y)
+} 
+```
+
+
 
 
 # Resampling
