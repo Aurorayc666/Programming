@@ -10,9 +10,11 @@ Packages:
 install.packages("devtools")
 install.packages("dplyr")
 install.packages("tidyr")
+install.packages("readr")
 install.packages("GGally")    # ggplot2 extension. especially for modeling
 install.packages("ProjectTemplate")
 install_github("StatsWithR/statsr")
+install.packages('VennDiagram')
 ```
 
 Libraries:
@@ -21,13 +23,18 @@ library(devtools)
 library(plyr)
 library(dplyr)
 library(tidyr)
+library(readr)
 library(utils)
 library(ggplot2)
 library(knitr)
 library(GGally)
+library(data.table)
 library(shiny)
 library(ProjectTemplate)
 library(statsr)
+library(VennDiagram)
+library(xtable)
+library(magick) # image rotation
 ```
 
 Download and load data:
@@ -62,6 +69,13 @@ summary(gapminder)
 ```
 
 # Data Wrangling
+
+Subsetting:
+```r
+subset(df, var1 < 5)    # return all cols where var1 conditions met
+subset(df, var1==5, select=c(var2, state))  # return specified columns
+```
+
 Filter columns:
 ```r
 gapminder_pop <- select(gapminder, country, year, pop, continent)
