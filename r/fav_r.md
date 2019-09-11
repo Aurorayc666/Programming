@@ -12,9 +12,7 @@ install.packages("dplyr")
 install.packages("tidyr")
 install.packages("readr")
 install.packages("GGally")    # ggplot2 extension. especially for modeling
-install.packages("ProjectTemplate")
 install_github("StatsWithR/statsr")
-install.packages('VennDiagram')
 ```
 
 Libraries:
@@ -35,6 +33,8 @@ library(statsr)
 library(VennDiagram)
 library(xtable)
 library(magick) # image rotation
+library(aod)    # logistic regression
+library(stringr)    #things like word splitting, string reversing
 ```
 
 Download and load data:
@@ -69,6 +69,36 @@ summary(gapminder)
 ```
 
 # Data Wrangling
+
+Selecting rows with dplyr:
+```r
+filter
+distinct
+sample_frac
+sample_n
+slice
+top_n
+top_frac
+```
+
+Selecting columns with dplyr:
+```r
+my_tbl %>% select(3,contains('foo')) #return column 3 and columns with name containing 'foo'
+my_tbl %>% select(-foobar, -blimblam) #return column except for foobar and blimblam
+
+# select arguments:
+    contain
+    ends_with
+    everything
+    matches
+    num_range
+    one_of
+    starts_with
+    colnamei:colnamej
+    -colnamei
+
+
+```
 
 Subsetting:
 ```r
@@ -106,6 +136,7 @@ Group by and perform operation:
 ```r
 group_by(gapminder, year) %>% summarise(sum(pop), sum(gdp))
 
+ungroup()       # remove group by from a data frame
 
 ddply(                          # dd (dataframe in, dataframe out) ply
  .data = calcGDP(gapminder),
@@ -135,6 +166,15 @@ gap_long <- gap_wide %>%
             starts_with('lifeExp'), 
             starts_with('gdpPercap'))   # Column identification supports `-` to exclude and use all other
 str(gap_long)
+
+mydf <- data.frame(
+        Student=c("Larry","Sally","Moe","Jenny","Curly"),
+        Test1=c(1.8,2.3,4.1,3.5,4.7), 
+        Test2=c(1.1,2.1,4.3,3.6,6.9), 
+        Test3=c(2.1,3.1,5.4,3.6,7.9))
+mytib <- tbl_df(mydf)
+mytib_gathered <- mytib %>% gather(Test, Marks, -Student) 
+spread(mytib_gathered, Test, Marks)
 ```
 
 Convert long to wide with unite and spread:
@@ -163,6 +203,23 @@ Create dataframe from vectors:
 sal <- c(1000, 1200, 1345, 1234)
 fcst <- c(1200, 1300, 1300, 1200)
 df <- data.frame(sales = sal, forecast = fcst)
+```
+
+Join and Union:
+
+```r
+# inner join:
+dfC <- merge(dfA, dfB, by=c("ID","Country")) # join on both variables in vector
+
+# union (must have same variables, but can be different order):
+dfc <- rbind(dfA, dfB) 
+
+# joining with dplyr: left_join(), right_join(), inner_join(), full_join:
+dfC <- left_join(dfA, dfC, by = c('ID','Country'))
+
+# joining on dissimilar variable names:
+dfC <- left_join(dfA, dfC, by = c('ID' = 'id', 'Country' = 'country'))
+
 ```
 
 # User Defined Functions (UDF)
@@ -210,8 +267,6 @@ for (y in x) {
 ```
 
 
-
-
 # Resampling
 Simple random sample:
 ```r
@@ -245,6 +300,10 @@ sample_means15 %>%
         max = max(x_bar),
         iqr = IQR(x_bar)
         )
+
+# use summarise_all() and funs() to operate on multiple columns, e.g.:
+select(hsb, read, write) %>% summarise_all(funs(max,mean,min))
+
 ```
 
 Calculate proportion satisfying a condition:
@@ -320,6 +379,17 @@ Histogram:
 ```r 
 ggplot(data=sample_means15, aes(x=x_bar)) +
     geom_histogram(binwidth=5000)
+
+
+# Computed bin width example:
+breaks <- pretty(range(mydata$colname),
+        n = nclass.FD(mydata$colname),
+        min.n = 1)
+bwidth <- breaks[2]-breaks[1]
+p <- ggplot(mydata)
+p + 
+  aes(colname) + 
+  geom_histogram(binwidth=bwidth)
 ```
 
 Scatterplot:
@@ -362,6 +432,12 @@ ggplot(data = ci_data, aes(
   geom_vline(xintercept = params$mu, color = "darkgray") # draw vertical line
 ```
 
+Override data and pass along like a pipe:
+```r
+base %+% subset(mpg, fl == "p")  # use the subset of `base` for plot data. Useful for subsetting.
+```
+
+
 # Publishing / Exporting
 
 Exporting Result as a PNG:
@@ -399,8 +475,9 @@ write.table(
 )
 ```
 
+# Modeling
 
-# Linear Regression
+## Linear Regression
 Correlation coefficient:
 ```r
 sometable %>%
@@ -487,3 +564,7 @@ Print a specific model output:
 ```r
 print(paste("Adjusted R²: ", summary(modelname)$adj.r.squared))
 ```
+
+## Logit (Logistic) Regression
+
+https://stats.idre.ucla.edu/r/dae/logit-regression/
