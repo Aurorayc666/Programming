@@ -13,17 +13,27 @@ install.packages("tidyr")
 install.packages("readr")
 install.packages("GGally")    # ggplot2 extension. especially for modeling
 install_github("StatsWithR/statsr")
+
+# Install if do not have:
+if (!require(ggplot2)) {
+    install.packages("ggplot2")
+    require(ggplot2)
+}
 ```
 
 Libraries:
 ```r
-library(devtools)
-library(plyr)
 library(dplyr)
 library(tidyr)
-library(readr)
-library(utils)
 library(ggplot2)
+library(stringr)    #things like word splitting, string reversing
+library(utils)
+library(devtools)
+library(magick)     # image rotation
+library(lubridate)  #dates
+
+library(plyr)
+library(readr)
 library(knitr)
 library(GGally)
 library(data.table)
@@ -32,9 +42,7 @@ library(ProjectTemplate)
 library(statsr)
 library(VennDiagram)
 library(xtable)
-library(magick) # image rotation
-library(aod)    # logistic regression
-library(stringr)    #things like word splitting, string reversing
+library(aod)        # logistic regression?
 ```
 
 Download and load data:
