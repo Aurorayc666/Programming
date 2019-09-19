@@ -1,1 +1,0 @@
-https://csvkit.readthedocs.io/en/latest/index.html

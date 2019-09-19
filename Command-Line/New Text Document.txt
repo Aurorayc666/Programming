@@ -1,0 +1,3 @@
+sqlite3 filename.db
+.header on
+.mode columns
