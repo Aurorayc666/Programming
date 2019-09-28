@@ -7,6 +7,7 @@
 
 Packages:
 ```r
+# chunk settings: message=FALSE, warning=FALSE
 install.packages("devtools")
 install.packages("dplyr")
 install.packages("tidyr")
