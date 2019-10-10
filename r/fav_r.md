@@ -260,10 +260,10 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
 
 Access like a matrix:
 ```r
-gapminder[1,2]  # first row, 2nd col
-gapminder[1,]   # first fow, all col
-gapminder[,2]   # all rows, 2nd col
-gapmider[1,1:2] # first row, cols 1-2
+gapminder[1,2]   # first row, 2nd col
+gapminder[1,]    # first fow, all col
+gapminder[,2]    # all rows, 2nd col
+gapminder[1,1:2] # first row, cols 1-2
 ```
 
 # Loops
