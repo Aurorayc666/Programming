@@ -1,9 +1,10 @@
 # DC R Conference 2019
 
-Full topics & speakers:
-https://dc.rstats.ai/agenda/
+Agenda: https://dc.rstats.ai/agenda/
 
 Slides: will be added to the site above in several weeks, after the site rebuild
+
+Twitter:  https://twitter.com/search?q=%23rstatsdc
 
 DC Data Community email list:  http://www.datacommunitydc.org/
 
