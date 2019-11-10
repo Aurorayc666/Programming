@@ -142,6 +142,7 @@ Cross tab of counts:
 
 ```r
 table(var1,var2)
+prop.table(table(var1,var2))
 ```
 
 Facets:
@@ -319,4 +320,12 @@ decompose(df)$figure  # seasonally adjusted values
 
 ```r
 m <- matrix(data, ncol, nrows)
+```
+
+# Normalization & Clustering
+
+```r
+normalized <- scale(df, center=TRUE, scale=TRUE)  # converts all numeric col values to standard deviations from zero
+results <- kmeans(normalized,3)                   # 3 centers
+table(df$label, results$cluster)                  # validation against labeled data (note: should remove labels before running k means)
 ```

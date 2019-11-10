@@ -11,7 +11,9 @@ python
 
 Libraries:
 ```py
+from math import *
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import glob
 import sys      # connects Python to system it is running on
@@ -47,6 +49,17 @@ axes3.set_ylabel('min')
 axes3.plot(np.min(composite_data, axis=0))
 fig.tight_layout()
 plt.show()
+```
+
+Glob and read CSVs with Pandas:
+
+```py
+mydata = pd.DataFrame()
+path = "mat/*.csv"
+for fname in glob.glob(path):
+    df = pd.read_csv(fname)
+    mydata = mydata.append(df, ignore_index=True)
+mydata
 ```
 
 # Data Exploration
@@ -155,6 +168,19 @@ counts = [2, 4, 6, 8, 10]
 print(counts*2)     # -> [2, 4, 6, 8, 10, 2, 4, 6, 8, 10]
 ```
 
+List comprehension:
+
+```py
+mynames=['Tom', 'Dick', 'Harry']
+['Hello '+ person for person in mynames]
+
+
+
+a =[1,2,3]
+b =[3,4,5]
+[(c,d) for c in a for d in b if c % 2 == 0 and d % 2 == 0]
+```
+
 # NumPy Math
 
 Summary statistics:
@@ -259,6 +285,34 @@ Starts with match:
 word = 'example'
 word.startswith('exa')  # -> true
 ```
+
+Common special characters:
+    \n   Newline (linefeed)
+    \t   horizontal tab
+    \    a single backslash
+    \"   a double-quote
+    \'   a single-quote (apostrophe)
+    \e   an ASCII escape character
+
+Special prints:
+
+```py
+s=r"string with \n newline"
+print(s)                              # normal printing
+print(r"string with \n newline")      # raw: specials as literals
+print(repr(s))                        # printable representation of object
+```
+
+Cases:
+
+```py
+s='some texT'
+s.title()      # Some Text
+s.capitalize() # Some text
+s.swapcase()   # SOME TEXt
+s.upper()      # SOME TEXT
+```
+
 
 # Loops
 
@@ -461,6 +515,28 @@ def test_range_overlap():
     assert range_overlap([]) == None
 
 test_range_overlap()
+```
+
+Try-Except:
+
+```py
+(x,y) = (5,0)
+try:
+    z = x/y
+except Exception as e:      # any exception
+    print(str(e))
+    print(repr(e))
+
+
+
+(x,y) = (5,0)
+try:
+    z = x/y
+except ZeroDivisionError:  # specific error
+    print("divide by zero")
+
+
+
 ```
 
 # Shell
